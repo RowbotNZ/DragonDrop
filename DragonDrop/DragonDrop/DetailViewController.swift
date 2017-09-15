@@ -115,6 +115,7 @@ extension DetailViewController: UICollectionViewDropDelegate {
                     }
                     
                     dataSource.insert(localObject, at: destinationIndexPath.item)
+                    coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
                     collectionView.insertItems(at: [destinationIndexPath])
                     
                     delegate?.detailViewController(self, didUpdate: dataSource)
@@ -125,6 +126,7 @@ extension DetailViewController: UICollectionViewDropDelegate {
                         if item.dragItem.itemProvider.canLoadObject(ofClass: handledType) {
                             struct PlaceholderModel: DisplayItemConvertible { }
                             dataSource.insert(PlaceholderModel(), at: destinationIndexPath.item)
+                            coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
                             collectionView.insertItems(at: [destinationIndexPath])
                             
                             item.dragItem.itemProvider.loadObject(ofClass: handledType, completionHandler: { (object, error) in
